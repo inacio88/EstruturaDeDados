@@ -47,11 +47,134 @@ tipoLista inserirDireita(int valor, tipoLista lista){
         while (listaAux->proximo != NULL){
             listaAux = listaAux->proximo;
         }
-        novoNoh->anterior = listaAux;
+        
         listaAux->proximo = novoNoh;
+        novoNoh->anterior = listaAux;
    //?     
         return lista;
     }
+}
+
+tipoLista removerEsquerda(tipoLista lista){
+    tipoLista listaAux = lista;
+    
+    if (lista == NULL){
+        return lista;
+    }
+
+    else if (listaAux->proximo == NULL){
+        free(listaAux);
+        listaAux = NULL;
+    }
+
+    else{
+
+        lista = listaAux->proximo; 
+        free(listaAux);
+        listaAux = NULL;
+        return lista;
+    }
+    
+}
+
+tipoLista removerDireita(tipoLista lista){
+    tipoLista listaAux = lista;
+    tipoLista listaAux2;
+
+    if (lista == NULL){
+        printf("\nvazia\n");
+    }
+    else{
+        
+
+        if (listaAux->proximo == NULL){
+           free(listaAux);
+           listaAux = NULL;
+        }
+        else{
+            while (listaAux->proximo != NULL){
+                listaAux = listaAux->proximo;
+            }
+
+            listaAux2 = listaAux;
+            listaAux->anterior->proximo = NULL;
+            listaAux2->anterior = NULL;
+            free(listaAux2);
+            listaAux2 = NULL;
+
+            return lista;
+
+
+        }
+        
+
+    }
+    return listaAux;
+    
+
+}
+tipoLista excluirMeio(int valor, tipoLista lista){
+    int flag = 0;
+    if (lista == NULL){
+        printf("Lista vazia");
+    }
+    else{
+
+        tipoLista listaAux = lista;
+        tipoLista listaAux2;
+        while (listaAux != NULL){
+            
+            
+            if (listaAux->dado == valor){
+                listaAux2 = listaAux->anterior;
+                listaAux = listaAux->proximo;
+                listaAux2->proximo = listaAux;
+                
+
+
+                printf("VAor: %d \n", listaAux->dado);
+
+
+                return lista;
+
+            }
+            
+            listaAux = listaAux->proximo;
+            
+        }
+
+
+    }
+    printf("Esse valor foi encontrado %d vezes", flag);
+
+}
+
+
+
+
+void pesquisar(int valor, tipoLista lista){
+    int flag = 0;
+    if (lista == NULL){
+        printf("Lista vazia");
+    }
+    else{
+
+        tipoLista listaAux = lista;
+        while (listaAux != NULL){
+            
+            
+            if (listaAux->dado == valor){
+                flag++;
+            }
+            
+            listaAux = listaAux->proximo;
+            
+        }
+
+
+    }
+    printf("Esse valor foi encontrado %d vezes", flag);
+
 }
 
 void exibir(tipoLista lista){
@@ -68,11 +191,17 @@ void exibir(tipoLista lista){
             listaAux = listaAux->proximo;
             contador++;
         }
-        if (contador > 2){
+        if (contador > 0){
             //printf("%d ultimo:  \n", listaAux->dado);
-            listaAux2 = listaAux;
-            listaAux2 = listaAux2->anterior;
-            printf("%d penultimo \n", listaAux2->dado);
+           // listaAux2 = lista;
+           // while (listaAux2->proximo != NULL){
+            //    listaAux2 = listaAux2->proximo;
+            //}
+            
+           // listaAux2 = listaAux2->anterior;
+            //printf("\n %d ultimo \n", listaAux2->dado);
+           // listaAux2 = listaAux2->anterior;
+            //printf("%d penultimo \n", listaAux2->dado);
         }
         
         
@@ -113,12 +242,12 @@ int main(){
             break;
         case 3:
             printf("Remover esquerda \n");
-            //lista = removerEsquerda(lista);
+            lista = removerEsquerda(lista);
     
             break;
         case 4:
             printf("Remover direita \n");
-            //lista = removerDireita(lista);
+            lista = removerDireita(lista);
     
             break;
         case 5:
@@ -128,12 +257,12 @@ int main(){
         case 6:
             printf("Pequisar: \n");
             scanf("%d", &valor);
-           // pesquisar(valor, lista);
+            pesquisar(valor, lista);
             break;
         case 7:
             printf("Excluir no meio: \n");
             scanf("%d", &valor);
-          //lista =   excluirMeio(valor, lista);
+            lista =  excluirMeio(valor, lista);
             break;
         
 
